@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 async function setupQuestions() {
     try {
+        console.log('⚠️  WARNING: This script will unlock all teams but preserve all data!');
         console.log('🔓 Unlocking all teams...');
         await prisma.team.updateMany({
             data: { locked: false }
@@ -111,18 +112,19 @@ async function setupQuestions() {
         const existingQuestions = await prisma.question.findMany();
         
         if (existingQuestions.length > 0) {
-            console.log(`⚠️  Found ${existingQuestions.length} existing questions. Delete them? (y/n)`);
-            console.log('Clearing old questions...');
-            await prisma.question.deleteMany();
-            console.log('✅ Old questions cleared!');
-        }
-
-        // Add questions
-        for (const question of questions) {
-            await prisma.question.create({
-                data: question
-            });
-            console.log(`✅ Added: ${question.question_text} - ${question.question_description}`);
+            console.log(`⚠️  Found ${existingQuestions.length} existing questions in database.`);
+            console.log('⏭️  Skipping question setup to preserve existing data.');
+            console.log('💡 To reset questions, manually delete them from the database first.');
+        } else {
+            // Add questions only if database is empty
+            console.log('📝 Adding questions to empty database...');
+            for (const question of questions) {
+                await prisma.question.create({
+                    data: question
+                });
+                console.log(`✅ Added: ${question.question_text} - ${question.question_description}`);
+            }
+            console.log(`\n✅ Successfully added ${questions.length} questions!`);
         }
 
         console.log('\n🎉 Setup complete!');

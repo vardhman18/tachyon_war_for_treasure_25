@@ -289,23 +289,23 @@ app.get('/get-teams', async (req: Request, res: Response) => {
         // Filter teams that completed ALL 15 questions
         const completedTeams = teams.filter(team => team.team_progress.length === 15);
 
-        // Get Question 15 completion time for each team to determine ranking
-        const teamsWithCompletionTime = await Promise.all(
+        // Map teams with their completion time of Question 15
+        const teamsWithProgress = await Promise.all(
             completedTeams.map(async (team) => {
+                // Get Question 15 completion time for ranking
                 const q15Progress = await prisma.teamProgress.findFirst({
                     where: {
                         team_name: team.team_name,
                         is_completed: true,
                         question: {
-                            question_text: {
-                                contains: '15'
-                            }
+                            question_text: 'Question 15'
                         }
                     }
                 });
 
                 return {
                     team_name: team.team_name,
+                    completed_questions: 15,
                     solved_at: q15Progress?.solved_at || new Date(),
                     users: team.users.map((user: any) => ({
                         EnrollNo: user.EnrollNo,
@@ -314,19 +314,177 @@ app.get('/get-teams', async (req: Request, res: Response) => {
             })
         );
 
-        // Sort by completion time (earliest first)
-        teamsWithCompletionTime.sort((a, b) => 
+        // Sort by completion time of Question 15 (earliest first)
+        teamsWithProgress.sort((a, b) => 
             new Date(a.solved_at).getTime() - new Date(b.solved_at).getTime()
         );
 
         // Add rank numbers
-        const result = teamsWithCompletionTime.map((team, index) => ({
+        const result = teamsWithProgress.map((team, index) => ({
             rank: index + 1,
             ...team
         }));
 
         res.status(200).json(result);
     } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
+// Get all registered teams with their login credentials
+app.get('/all-teams', async (req: Request, res: Response) => {
+    try {
+        const teams = await prisma.team.findMany({
+            include: {
+                users: {
+                    select: {
+                        name: true,
+                        EnrollNo: true
+                    }
+                },
+                team_progress: {
+                    where: {
+                        is_completed: true
+                    },
+                    select: {
+                        question_id: true
+                    }
+                }
+            },
+            orderBy: {
+                team_name: 'asc'
+            }
+        });
+
+        const result = teams.map(team => ({
+            team_name: team.team_name,
+            team_password: team.team_password,
+            locked: team.locked,
+            total_members: team.users.length,
+            members: team.users,
+            questions_completed: team.team_progress.length,
+            status: team.team_progress.length === 15 ? 'Completed All' : 
+                    team.team_progress.length > 0 ? 'In Progress' : 'Not Started'
+        }));
+
+        res.status(200).json({
+            total_teams: result.length,
+            teams: result
+        });
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
+// Get teams that started but did not finish (1-14 questions completed)
+app.get('/incomplete-teams', async (req: Request, res: Response) => {
+    try {
+        const teams = await prisma.team.findMany({
+            include: {
+                users: {
+                    select: {
+                        name: true,
+                        EnrollNo: true
+                    }
+                },
+                team_progress: {
+                    where: {
+                        is_completed: true
+                    },
+                    include: {
+                        question: {
+                            select: {
+                                question_text: true,
+                                question_description: true
+                            }
+                        }
+                    },
+                    orderBy: {
+                        solved_at: 'desc'
+                    }
+                }
+            }
+        });
+
+        // Filter teams that have started (1-14 questions) but not finished
+        const incompleteTeams = teams.filter(team => 
+            team.team_progress.length > 0 && team.team_progress.length < 15
+        );
+
+        const result = incompleteTeams.map(team => {
+            const lastSolved = team.team_progress[0]; // Most recent due to orderBy desc
+            
+            return {
+                team_name: team.team_name,
+                members: team.users,
+                questions_completed: team.team_progress.length,
+                questions_remaining: 15 - team.team_progress.length,
+                last_solved_question: lastSolved ? lastSolved.question.question_text : null,
+                last_solved_at: lastSolved ? lastSolved.solved_at : null,
+                progress_percentage: Math.round((team.team_progress.length / 15) * 100)
+            };
+        });
+
+        // Sort by progress (most progress first)
+        result.sort((a, b) => b.questions_completed - a.questions_completed);
+
+        res.status(200).json({
+            total_incomplete_teams: result.length,
+            teams: result
+        });
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
+// ⚠️ DANGER: Delete all user data from database
+// Requires confirmation parameter to prevent accidental deletion
+app.delete('/delete-all-data', async (req: Request, res: Response) => {
+    try {
+        const { confirm } = req.body;
+        
+        // Require explicit confirmation
+        if (confirm !== 'DELETE_ALL_DATA') {
+            return res.status(400).json({ 
+                error: 'Confirmation required',
+                message: 'Send { "confirm": "DELETE_ALL_DATA" } in request body to proceed'
+            });
+        }
+
+        // Delete in correct order to respect foreign key constraints
+        console.log('🗑️ Deleting all data...');
+        
+        // Delete team progress first (has foreign keys to teams and questions)
+        const deletedProgress = await prisma.teamProgress.deleteMany();
+        console.log(`✅ Deleted ${deletedProgress.count} team progress records`);
+
+        // Delete users (has foreign key to teams)
+        const deletedUsers = await prisma.user.deleteMany();
+        console.log(`✅ Deleted ${deletedUsers.count} users`);
+
+        // Delete teams
+        const deletedTeams = await prisma.team.deleteMany();
+        console.log(`✅ Deleted ${deletedTeams.count} teams`);
+
+        // Delete hints
+        const deletedHints = await prisma.hint.deleteMany();
+        console.log(`✅ Deleted ${deletedHints.count} hints`);
+
+        // Note: Questions are NOT deleted to preserve quiz structure
+        
+        res.status(200).json({
+            success: true,
+            message: 'All user data has been deleted',
+            deleted: {
+                teams: deletedTeams.count,
+                users: deletedUsers.count,
+                team_progress: deletedProgress.count,
+                hints: deletedHints.count
+            },
+            note: 'Questions were preserved for quiz structure'
+        });
+    } catch (error) {
+        console.error('Error deleting data:', error);
         res.status(500).json({ error: (error as Error).message });
     }
 });

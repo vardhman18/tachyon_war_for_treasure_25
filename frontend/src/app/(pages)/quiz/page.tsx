@@ -28,6 +28,7 @@ const QuizPage = () => {
   const [hint, setHint] = useState("");
   const [hints, setHints] = useState<string[]>([]); // State to store hints
   const [isHintModalVisible, setIsHintModalVisible] = useState(false); // State to manage hint modal visibility
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(true); // State to track if questions are being loaded
 
   const checkTeamLocked = async () => {
 
@@ -50,6 +51,7 @@ const QuizPage = () => {
 
   const fetchQuizData = async () => {
     try {
+      setIsLoadingQuestions(true);
       console.log(teamName);
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -78,6 +80,8 @@ const QuizPage = () => {
       }))); // Log the value of quizData after setting it
     } catch (error) {
       console.error("Error fetching quiz data:", error);
+    } finally {
+      setIsLoadingQuestions(false);
     }
   };
 
@@ -175,13 +179,27 @@ const QuizPage = () => {
   };
 
   const showCurrentQuestion = () => {
+    if (isLoadingQuestions) {
+      setTerminalLines((prevLines) => [
+        <div key="loading">Loading questions...</div>,
+      ]);
+      return;
+    }
+    
+    if (quizData.length === 0) {
+      setTerminalLines((prevLines) => [
+        <div key="quiz-end">Quiz finished! You have completed all questions! 🎉</div>,
+      ]);
+      return;
+    }
+    
     if (currentQuestionIndex < quizData.length) {
-      const questionText = `Question ${quizData[currentQuestionIndex].question_text}: ${quizData[currentQuestionIndex].question_discription}`;
+      const questionText = `${quizData[currentQuestionIndex].question_text}: ${quizData[currentQuestionIndex].question_discription}`;
       setTypingText("");
       typeWriterEffect(questionText);
     } else {
-      setTerminalLines((prevLines) => [
-        <div key="quiz-end">Quiz finished! Great job!</div>,
+      setTerminalLines([
+        <div key="quiz-end">🎉 Quiz has ended! You have completed all questions! 🎉</div>,
       ]);
     }
   };
@@ -225,15 +243,30 @@ const QuizPage = () => {
     }
 
     if (!quizStarted) {
+      if (isLoadingQuestions) {
+        setTerminalLines((prevLines) => [
+          ...prevLines,
+          <div key={`loading-${Date.now()}`}>Loading questions, please wait...</div>,
+        ]);
+        return;
+      }
+      
+      if (quizData.length === 0) {
+        setTerminalLines((prevLines) => [
+          ...prevLines,
+          <div key={`no-questions-${Date.now()}`}>No questions available. You've completed all questions! 🎉</div>,
+        ]);
+        return;
+      }
+      
       setQuizStarted(true);
       showCurrentQuestion();
       return;
     }
 
-    if (currentQuestionIndex >= quizData.length) {
-      setTerminalLines((prevLines) => [
-        ...prevLines,
-        <div key={`quiz-over-${Date.now()}`}>The quiz has ended.</div>,
+    if (currentQuestionIndex >= quizData.length || quizData.length === 0) {
+      setTerminalLines([
+        <div key={`quiz-over-${Date.now()}`}>🎉 Quiz has ended! You have completed all questions! 🎉</div>,
       ]);
       return;
     }
@@ -269,7 +302,7 @@ const QuizPage = () => {
   };
 
   useEffect(() => {
-    if (quizStarted && currentQuestionIndex < quizData.length) {
+    if (quizStarted && currentQuestionIndex < quizData.length && !isLoadingQuestions) {
       showCurrentQuestion();
     }
   }, [currentQuestionIndex]);

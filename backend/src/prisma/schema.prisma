@@ -19,7 +19,7 @@ model User {
   EnrollNo  String @id
   name      String
   team_name String
-  team      Team   @relation(fields: [team_name], references: [team_name])
+  team      Team   @relation(fields: [team_name], references: [team_name], onDelete: Cascade)
 }
 
 model Question {
@@ -36,8 +36,8 @@ model TeamProgress {
   question_id  String
   is_completed Boolean
   solved_at    DateTime?
-  question     Question  @relation(fields: [question_id], references: [question_id])
-  team         Team      @relation(fields: [team_name], references: [team_name])
+  question     Question  @relation(fields: [question_id], references: [question_id], onDelete: Restrict)
+  team         Team      @relation(fields: [team_name], references: [team_name], onDelete: Cascade)
 
   @@unique([team_name, question_id])
 }

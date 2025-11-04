@@ -15,6 +15,8 @@ interface Team {
   team_name: string;
   users: User[];
   rank?: number;
+  completed_questions?: number;
+  solved_at?: string;
 }
 
 export function ExpandableCardDemo() {
@@ -228,7 +230,7 @@ export function ExpandableCardDemo() {
                       layoutId={`description-${team.team_name}-${id}`}
                       className=" dark:text-neutral-400 text-center md:text-left"
                     >
-                      Rank {team.rank}
+                      Rank {team.rank} • {team.completed_questions || 0}/15 Questions
                     </motion.p>
                   </div>
                 </div>
