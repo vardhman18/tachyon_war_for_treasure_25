@@ -103,7 +103,7 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (!teamName) {
-      router.push("/login");
+      router.replace("/login");
     } else {
       checkTeamLocked(); // Check if the team is locked
       fetchQuizData();
