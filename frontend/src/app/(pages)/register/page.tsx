@@ -33,8 +33,8 @@ const TeamRegistrationPage = () => {
     const terminalRef = useRef(null); // Ref for the Terminal component
 
     const maxPlayers = 5;
-    const enrollmentRegex = /241\d{3}/; // Regex for first-year students
-    const otherYearRegex = /^(231b|221b|211b|241\d{3})/; // Updated Regex for all years
+    const enrollmentRegex = /^\d{2}1b\d{3}$/i; // Accepts: 231b405, 251b405, 241b405, 221b405, etc.
+    const otherYearRegex = /^\d{2}1b\d{3}$/i; // Same pattern for all years
 
     const registrationSteps = [
         { prompt: "Enter Team Name:", field: "teamName" },
