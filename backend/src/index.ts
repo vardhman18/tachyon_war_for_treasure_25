@@ -43,6 +43,36 @@ app.post('/unlock-all-teams', async (req: Request, res: Response) => {
     }
 });
 
+// Lock quiz for all teams (registration still allowed, but quiz cannot be started)
+app.post('/lock-quiz', async (req: Request, res: Response) => {
+    try {
+        await prisma.team.updateMany({
+            data: { locked: true }
+        });
+        res.status(200).json({ 
+            message: 'Quiz locked for all teams. Registration is still allowed, but teams cannot start the quiz.',
+            locked: true 
+        });
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
+// Unlock quiz for all teams (teams can now start the quiz)
+app.post('/unlock-quiz', async (req: Request, res: Response) => {
+    try {
+        await prisma.team.updateMany({
+            data: { locked: false }
+        });
+        res.status(200).json({ 
+            message: 'Quiz unlocked for all teams. Teams can now start the quiz.',
+            locked: false 
+        });
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
 app.post('/register-team', async (req: Request<{}, {}, TeamRequestBody>, res: Response) => {
     const { team_name, team_password, users } = req.body;
     try {
@@ -53,10 +83,19 @@ app.post('/register-team', async (req: Request<{}, {}, TeamRequestBody>, res: Re
             return res.status(400).json({ error: 'Team name already exists' });
         }
 
+        // Check if any existing team is locked to determine the default lock status
+        const anyLockedTeam = await prisma.team.findFirst({
+            where: { locked: true }
+        });
+        
+        // If any team is locked, lock the new team as well (quiz is globally locked)
+        const shouldLock = anyLockedTeam !== null;
+
         const newTeam = await prisma.team.create({
             data: {
                 team_name,
                 team_password,
+                locked: shouldLock, // Set lock status based on global lock state
                 users: {
                     create: users.map(user => ({
                         EnrollNo: user.EnrollNo,
@@ -432,6 +471,45 @@ app.get('/incomplete-teams', async (req: Request, res: Response) => {
             total_incomplete_teams: result.length,
             teams: result
         });
+    } catch (error) {
+        res.status(500).json({ error: (error as Error).message });
+    }
+});
+
+// Download all teams with enrollment numbers as CSV
+app.get('/download-teams-csv', async (req: Request, res: Response) => {
+    try {
+        const teams = await prisma.team.findMany({
+            include: {
+                users: {
+                    select: {
+                        name: true,
+                        EnrollNo: true
+                    }
+                }
+            },
+            orderBy: {
+                team_name: 'asc'
+            }
+        });
+
+        // Create CSV header
+        let csv = 'Team Name,Member Name,Enrollment Number\n';
+
+        // Add each team and their members
+        teams.forEach(team => {
+            team.users.forEach(user => {
+                // Escape commas in names by wrapping in quotes
+                const teamName = team.team_name.includes(',') ? `"${team.team_name}"` : team.team_name;
+                const userName = user.name.includes(',') ? `"${user.name}"` : user.name;
+                csv += `${teamName},${userName},${user.EnrollNo}\n`;
+            });
+        });
+
+        // Set headers for file download
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="teams-${Date.now()}.csv"`);
+        res.status(200).send(csv);
     } catch (error) {
         res.status(500).json({ error: (error as Error).message });
     }

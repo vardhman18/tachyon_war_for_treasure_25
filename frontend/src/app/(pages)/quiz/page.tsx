@@ -17,6 +17,7 @@ const QuizPage = () => {
   const [isLocked, setIsLocked] = useState(false); // State to manage lock status
   const [terminalLines, setTerminalLines] = useState([
     <div key="welcome">Welcome to the Quiz!</div>,
+    <div key="loading">Loading questions...</div>,
   ]);
   const [messageApi, contextHolder] = message.useMessage();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -105,14 +106,60 @@ const QuizPage = () => {
     setIsHintModalVisible(true);
   };
 
+  const checkLockStatus = async () => {
+    try {
+      const response = await fetch(API_ENDPOINTS.TEAM_LOCKED, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ team_name: teamName }),
+      });
+      const data = await response.json();
+      if (data.locked) {
+        setIsLocked(true);
+        setTerminalLines([
+          <div key="locked-message" style={{ color: "red" }}>🔒 Quiz has been LOCKED by the organizers!</div>,
+          <div key="locked-info" style={{ color: "yellow" }}>Please wait until the quiz is unlocked to continue.</div>,
+        ]);
+      } else {
+        setIsLocked(false);
+      }
+    } catch (error) {
+      console.error("Error checking lock status:", error);
+    }
+  };
+
   useEffect(() => {
     if (!teamName) {
       router.replace("/login");
     } else {
-      checkTeamLocked(); // Check if the team is locked
       fetchQuizData();
+      checkLockStatus(); // Check lock status when page loads
+      
+      // Check lock status every 5 seconds
+      const lockCheckInterval = setInterval(() => {
+        checkLockStatus();
+      }, 5000);
+      
+      return () => clearInterval(lockCheckInterval); // Cleanup on unmount
     }
   }, [teamName, router]);
+
+  // Update terminal when questions finish loading
+  useEffect(() => {
+    if (!isLoadingQuestions && quizData.length > 0) {
+      setTerminalLines([
+        <div key="welcome">Welcome to the Quiz!</div>,
+        <div key="instructions">Press Enter to start the quiz</div>,
+        <div key="instructions2">Use 'answer [your answer]' to answer the questions.</div>,
+      ]);
+    } else if (!isLoadingQuestions && quizData.length === 0) {
+      setTerminalLines([
+        <div key="no-questions">No questions available. You have completed all questions! 🎉</div>,
+      ]);
+    }
+  }, [isLoadingQuestions, quizData.length]);
 
   useEffect(() => {
     const socket = new WebSocket(API_CONFIG.WS_URL);
@@ -224,6 +271,17 @@ const QuizPage = () => {
 
   const handleCommand = async (input: string) => {
     const trimmedInput = input.trim();
+    
+    // Check if quiz is locked before allowing any command
+    if (isLocked) {
+      setTerminalLines((prevLines) => [
+        ...prevLines,
+        <div key={`input-${Date.now()}`} style={{ color: "Green" }} >${trimmedInput}</div>,
+        <div key={`locked-warning-${Date.now()}`} style={{ color: "red" }}>🔒 Quiz is LOCKED! You cannot interact with the quiz right now.</div>,
+      ]);
+      return;
+    }
+    
     setTerminalLines((prevLines) => [
       ...prevLines,
       <div key={`input-${Date.now()}`} style={{ color: "Green" }} >${trimmedInput}</div>
@@ -370,12 +428,16 @@ const QuizPage = () => {
         </ul>
       </Modal>
       <Modal
-        title="Team Locked"
+        title="🔒 Quiz Locked"
         visible={isLocked}
+        closable={false}
         footer={null}
       >
-        {/* <Image src={lock.src}></Image> */}
-        <div className="tenor-gif-embed" data-postid="17684561" data-share-method="host" data-aspect-ratio="1.69312" data-width="100%"><a href="https://tenor.com/view/carry-minati-ajey-nagar-indian-you-tuber-carry-minati-roast-carry-gif-17684561">Carry Minati Ajey Nagar GIF</a>from <a href="https://tenor.com/search/carry+minati-gifs">Carry Minati GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <h3 style={{ color: 'red' }}>The quiz is currently locked!</h3>
+          <p>The organizers have temporarily locked the quiz.</p>
+          <p>Please wait until it is unlocked to continue.</p>
+        </div>
       </Modal>
     </div>
   );

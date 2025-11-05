@@ -123,6 +123,29 @@ const LoginPage = () => {
                 team_name: data.teamName,
                 team_password: data.teamPassword,
             };
+            
+            // First, check if team is locked
+            const lockCheckResponse = await fetch(API_ENDPOINTS.TEAM_LOCKED, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ team_name: data.teamName }),
+            });
+            const lockData = await lockCheckResponse.json();
+            
+            if (lockData.locked) {
+                setTerminalLines((prevLines) => [
+                    ...prevLines,
+                    <div key="quiz-locked" style={{ color: "red" }}>🔒 Quiz is currently LOCKED!</div>,
+                    <div key="quiz-locked-msg" style={{ color: "yellow" }}>The quiz may start soon. Please try logging in later.</div>,
+                ]);
+                setCurrentStep(0); // Reset to the first step
+                setIsLoginStarted(false); // Reset login process
+                return;
+            }
+            
+            // If not locked, proceed with login
             const response = await fetch(API_ENDPOINTS.LOGIN_TEAM, {
                 method: 'POST',
                 headers: {
