@@ -1,0 +1,425 @@
+/* Sponsor Section - Transformers Grey Theme */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&display=swap');
+
+.sponsor-section-container {
+  background: #000000;
+  background: linear-gradient(135deg, #0d0f12 0%, #000000 50%, #0d0f12 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 2rem;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-background {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  z-index: 1;
+  width: 100%;
+}
+
+.sponsor-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Main Content Layout - Horizontal Split */
+.sponsor-main-content {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1000px;
+  justify-content: space-between;
+}
+
+/* Left Section - Logo and Name */
+.sponsor-left-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 0 0 auto;
+}
+
+/* Right Section - Details */
+.sponsor-right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Title Styling */
+.sponsor-title-container {
+  text-align: center;
+}
+
+.sponsor-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: #e8eaed;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(232, 234, 237, 0.3);
+}
+
+.sponsor-title-underline {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4a9eff, #00d9ff, #4a9eff, transparent);
+  margin: 0.75rem auto 0 auto;
+  width: 100px;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+}
+
+/* Logo Container */
+.sponsor-logo-container {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sponsor-logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #191818;
+  border: 2px solid rgba(255, 255, 255, 0.719);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 30px rgba(23, 25, 28, 0.3);
+  padding: 6px;
+}
+
+.sponsor-logo:hover {
+  border-color: rgba(112, 121, 132, 0.6);
+  box-shadow: 0 0 40px rgba(96, 107, 109, 0.5), 0 10px 25px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.sponsor-logo-placeholder {
+  text-align: center;
+  color: #15171b;
+  font-family: 'Orbitron', monospace;
+  font-weight: 900;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-shadow: 0 0 10px rgba(232, 234, 237, 0.5);
+}
+
+.sponsor-logo-placeholder span {
+  display: block;
+}
+
+/* Logo Image */
+.sponsor-logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Sponsor Information */
+.sponsor-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.sponsor-name {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: #e8eaed;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(232, 234, 237, 0.3);
+  text-align: center;
+}
+
+/* Detail Items */
+.sponsor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.sponsor-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: #d1d5db;
+  line-height: 1.6;
+  font-weight: 500;
+  text-align: left;
+}
+
+.detail-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a9eff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.detail-icon svg {
+  filter: drop-shadow(0 0 4px rgba(74, 158, 255, 0.4));
+}
+
+.detail-text {
+  flex: 1;
+  font-weight: 500;
+/* Instagram Button */
+.sponsor-social {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}sponsor-social {
+  margin-top: 0.35rem;
+}
+
+.instagram-button {
+  background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 0.55rem 1.4rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(225, 48, 108, 0.4), 0 0 20px rgba(225, 48, 108, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.instagram-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.instagram-button:hover::before {
+  left: 100%;
+}
+
+.instagram-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 25px rgba(225, 48, 108, 0.5), 0 0 30px rgba(225, 48, 108, 0.3);
+  background: linear-gradient(135deg, #fd5949 0%, #d6336c 50%, #C13584 100%);
+}
+
+.instagram-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.instagram-button:focus {
+  background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+}
+
+/* Bottom Decoration */
+.sponsor-bottom-decoration {
+  text-align: center;
+  width: 100%;
+}
+
+.decoration-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(74, 158, 255, 0.4), rgba(0, 217, 255, 0.4), rgba(74, 158, 255, 0.4), transparent);
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (min-width: 1440px) {
+  .sponsor-section-container {
+    padding: 2.5rem 3rem;
+  }
+  
+  .sponsor-card {
+    padding: 2.25rem 2rem;
+    gap: 2.5rem;
+  }
+  
+  .sponsor-logo {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 991px) {
+  .sponsor-main-content {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .sponsor-left-section {
+    align-items: center;
+  }
+  
+  .sponsor-right-section {
+    align-items: center;
+    width: 100%;
+  }
+  
+  .sponsor-details {
+    align-items: center;
+  }
+  
+  .sponsor-detail-item {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .sponsor-social {
+    justify-content: center;
+  }
+  
+  .sponsor-logo {
+    width: 110px;
+    height: 110px;
+  }
+}
+  .sponsor-section-container {
+    padding: 2rem 1.5rem;
+  }
+  
+  .sponsor-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 1.75rem 1.5rem;
+  }
+  
+  .sponsor-info {
+    align-items: center;
+  }
+  
+  .sponsor-details {
+    align-items: center;
+  }
+  
+  .sponsor-logo {
+    width: 95px;
+    height: 95px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sponsor-section-container {
+    padding: 1.75rem 1rem;
+    min-height: auto;
+  }
+  
+  .sponsor-content {
+    gap: 1.25rem;
+  }
+  
+  .sponsor-main-content {
+    gap: 1.5rem;
+  }
+  
+  .sponsor-logo {
+    width: 85px;
+    height: 85px;
+    padding: 5px;
+  }
+  
+  .sponsor-name {
+    font-size: clamp(1.3rem, 4vw, 1.7rem);
+  }
+  
+  .sponsor-detail-item {
+    font-size: 0.95rem;
+  }
+  
+  .instagram-button {
+    padding: 0.6rem 1.15rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sponsor-section-container {
+    padding: 1.5rem 0.75rem;
+  }
+  
+  .sponsor-main-content {
+    gap: 1.25rem;
+  }
+  
+  .sponsor-logo {
+    width: 75px;
+    height: 75px;
+    padding: 4px;
+  }
+  
+  .sponsor-name {
+    font-size: 1.3rem;
+  }
+  
+  .sponsor-details {
+    gap: 1rem;
+  }
+  
+  .sponsor-detail-item {
+    font-size: 0.9rem;
+  }
+  
+  .detail-text {
+    font-size: 0.85rem;
+  }
+  
+  .instagram-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* High DPI text smoothing */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .sponsor-title, .sponsor-name {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

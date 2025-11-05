@@ -9,6 +9,7 @@ import { FollowPointer, FollowerPointerCard } from "./components/pointercard";
 import "./styles/hero.css"
 import { ExpandableCardDemo } from "./components/elites";
 import RuleSection from "./components/rulesection";
+import SponsorSection from "./components/sponsorsection";
 
 export default function Home() {
   const router = useRouter();
@@ -70,15 +71,15 @@ export default function Home() {
               width: '100%'
             }}>
               <Button className="anton-button" style={{ 
-                backgroundColor: "#0e17236e", 
-                border: "1px dotted white", 
-                borderRadius: '6px',
+                backgroundColor: "#0d0f129e", 
+                border: "2px dotted white", 
+                borderRadius: '8px',
                 height: 'auto'
               }} onClick={() => router.push('/register')}>Register</Button>
               <Button className="anton-button" style={{ 
-                backgroundColor: "#0e17236e", 
-                border: "1px dotted white", 
-                borderRadius: '6px',
+                backgroundColor: "#0d0f129e", 
+                border: "2px dotted white", 
+                borderRadius: '8px',
                 height: 'auto'
               }} onClick={() => router.push('/quiz')}>Join Hunt</Button>
             </div>
@@ -102,88 +103,22 @@ export default function Home() {
       </div>
       {/* Rules Section with Modern Animation Effects */}
       <RuleSection />
+      
+      {/* Sponsor Section */}
+      <SponsorSection />
+      
       <section className="rules-section">
-        <Flex justify="center" align="center" vertical style={{ marginTop: "50px" }}>
+        {/* ELITES section - Hidden until results are declared */}
+        {/* <Flex justify="center" align="center" vertical style={{ marginTop: "50px" }}>
           <h1 className="background-text rules-text">ELITES</h1>
           <h1 className="background-covertext rules-covertext">ELITE</h1>
-
-          {/* <Flex className="desktop" align="center" justify="center" style={{ marginTop :"10px"}} gap={30}>
-              {blogContent.map((content, index) => (
-                  <FollowerPointerCard
-                  key={index}
-                  title={
-                    <TitleComponent
-                      title={blogContent[index].author}
-                      avatar={blogContent[index].authorAvatar}
-                    />
-                  }
-                >
-                  <div className="card-maindiv">
-                    <div className="card-secdiv">
-                      <Flex align="center" justify="center" className="card-imageflex">
-                        <Image
-                        
-                          preview={false}
-                          src={logo.src}
-                          alt="thumbnail"
-                          className={`group-hover:scale-95 group-hover:rounded-2xl transform object-cover transition duration-200 card-hoverimage`}
-                        />
-                      </Flex>
-                    </div>
-                    <Flex align="center" justify="center" style={{ padding: "4px" }} vertical>
-                      <h2 className="card-title">
-                        {blogContent[index].title}
-                      </h2>
-                      <h2 className="card-description">
-                        {blogContent[index].description}
-                      </h2>
-                    </Flex>
-                  </div>
-                </FollowerPointerCard>
-              ))}
-          </Flex> */}
 
           <Flex align="center" justify="center" className="elites">
             <ExpandableCardDemo />
           </Flex>
 
-         {/* <Flex className="mobile" vertical align="center" justify="center" gap={40}>
-            {blogContent.map((content, index) => (
-              <FollowerPointerCard
-                key={index}
-                title={
-                  <TitleComponent
-                    title={blogContent[index].author}
-                    avatar={blogContent[index].authorAvatar}
-                  />
-                }
-              >
-                <div className="card-maindiv">
-                  <div className="card-secdiv">
-                    <Flex align="center" justify="center" className="card-imageflex">
-                      <Image
-
-                        preview={false}
-                        src={logo.src}
-                        alt="thumbnail"
-                        className={`group-hover:scale-95 group-hover:rounded-2xl transform object-cover transition duration-200 card-hoverimage`}
-                      />
-                    </Flex>
-                  </div>
-                  <Flex align="center" justify="center" style={{ padding: "4px" }} vertical>
-                    <h2 className="card-title">
-                      {blogContent[index].title}
-                    </h2>
-                    <h2 className="card-description">
-                      {blogContent[index].description}
-                    </h2>
-                  </Flex>
-                </div>
-              </FollowerPointerCard>
-            ))}
-          </Flex>*/}
-
-        </Flex>
+        </Flex> */}
+        
         <div >
           <Flex justify="center" align="center">
             <TextHoverEffect text=".HUNT." />
