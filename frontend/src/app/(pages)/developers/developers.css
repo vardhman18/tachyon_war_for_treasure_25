@@ -64,14 +64,11 @@
   font-family: 'Orbitron', monospace;
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #63b3ed 0%, #4299e1 50%, #3182ce 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1a1a1a;
   margin: 0;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-shadow: 0 2px 10px rgba(99, 179, 237, 0.3);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 
@@ -87,10 +84,10 @@
 .developers-title-underline {
   width: 120px;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #1a73e8, #0d47a1, #1a73e8, transparent);
+  background: linear-gradient(90deg, transparent, #4a5568, #2d3748, #4a5568, transparent);
   margin: 1.5rem auto 0;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Developers Grid */
@@ -185,13 +182,10 @@
 
 .developer-role {
   font-size: 1.1rem;
-  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #2d3748;
   margin: 0;
   font-weight: 600;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 /* Special Thanks Section */
@@ -209,10 +203,7 @@
   font-family: 'Orbitron', monospace;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1a1a1a;
   margin: 0 0 1rem 0;
   letter-spacing: 1.5px;
 }
@@ -220,7 +211,7 @@
 .special-thanks-underline {
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, transparent 0%, #4a9eff 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #4a5568 50%, transparent 100%);
   margin: 0 auto 2.5rem;
   border-radius: 2px;
 }
@@ -250,7 +241,7 @@
   border-color: rgba(26, 115, 232, 0.35);
   box-shadow: 0 6px 18px rgba(26, 115, 232, 0.18);
   transform: translateY(-2px);
-  color: #1556cf; /* readable blue on white */
+  color: #1a1a1a; /* black text on white */
 }
 
 /* Community Section */
@@ -263,10 +254,7 @@
   font-family: 'Orbitron', monospace;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 700;
-  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #1a1a1a;
   margin: 0 0 1rem 0;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -275,10 +263,10 @@
 .community-underline {
   width: 100px;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #1a73e8, #0d47a1, #1a73e8, transparent);
+  background: linear-gradient(90deg, transparent, #4a5568, #2d3748, #4a5568, transparent);
   margin: 0 auto 1.5rem;
   border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mozilla-logo {
