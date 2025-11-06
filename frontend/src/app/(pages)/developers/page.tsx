@@ -56,7 +56,7 @@ export default function Developers() {
             ))}
           </motion.div>
           <motion.div className="special-thanks-section" variants={itemVariants}>
-            <h2 className="special-thanks-title">SPECIAL THANKS</h2>
+            <h2 className="special-thanks-title">SPECIAL THANKS TO</h2>
             <div className="special-thanks-underline" />
             <div className="special-thanks-names">
               {specialThanks.map((name, index) => (
