@@ -62,12 +62,11 @@ export default function Home() {
               wordBreak: 'break-word',
               hyphens: 'auto'
             }}><span className="stroke">TREZOR</span></h1>
-            <div style={{ 
+            <div className="hero-actions" style={{ 
               display: 'flex', 
               gap: '1rem', 
               marginBottom: '2rem', 
               flexWrap: 'wrap',
-              justifyContent: 'flex-start',
               width: '100%'
             }}>
               <Button className="anton-button" style={{ 
@@ -91,13 +90,13 @@ export default function Home() {
               textAlign: 'inherit',
               lineHeight: '1.4'
             }}>Mozilla Phoniex Club</h3>
-           {/* <h3 className="anton-text" style={{ 
+           { <h3 className="anton-text" style={{ 
               fontSize: 'clamp(0.9rem, 2.5vw, 2rem)', 
               color: '#fff', 
               textShadow: '2px 2px 8px rgba(0,0,0,0.8)', 
               textAlign: 'inherit',
               lineHeight: '1.4'
-            }}>8 November</h3>*/}
+            }}>8 November || 01:00 PM</h3>}
           </div>
         </div>
       </div>
@@ -106,6 +105,8 @@ export default function Home() {
       
       {/* Sponsor Section */}
       <SponsorSection />
+  {/* Divider between Sponsor and Elites */}
+  <div className="section-divider" aria-hidden="true" />
       
       <section className="rules-section">
         {/* ELITES section - Hidden until results are declared */}
