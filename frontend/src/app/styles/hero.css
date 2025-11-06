@@ -80,6 +80,21 @@
     z-index: 2; /* above overlay */
 }
 
+/* Button row inside hero */
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* default desktop */
+}
+
+.hero-actions .anton-button {
+    /* let CSS control width; inline styles set height only */
+    width: auto;
+    min-width: 120px;
+}
+
 .main-content {
     display: flex;
     height: 100%;
@@ -650,45 +665,104 @@
         margin-right: 100px;
     }
 
+    /* make hero stack on small screens */
     .hero-wrapper{
-        height: 120vh;
+        height: auto; /* let content flow naturally on mobile */
+        padding-bottom: 2rem;
     }
 
     .main-content {
         display: flex;
-        height: 100%;
+        flex-direction: column; /* stack content then image */
+        align-items: center;
+        gap: 1.5rem;
+        height: auto;
     }
-    
+
     .image-container {
-        flex: 3;
+        width: 100%;
+        flex: none;
         display: flex;
-        justify-content: flex-end;
-        padding-right: 50px;
+        justify-content: center; /* center hero image */
+        padding: 0 1rem;
+        order: 2; /* keep image below the text */
     }
-    
+
     .content-container {
-        flex: 1;
+        width: 100%;
+        flex: none;
         display: flex;
         align-items: center;
-        padding-left: 50px;
+        justify-content: center;
+        padding: 0 1rem;
+        order: 1;
+    }
+    /* center and stack buttons on small screens */
+    .hero-actions {
+        justify-content: center !important; /* override any inline justifyContent */
+    }
+    .hero-actions .anton-button {
+        width: min(92%, 360px);
+        display: block;
+        text-align: center;
+    }
+
+    /* Horizontal divider between Sponsor and Elites sections */
+    .section-divider {
+        width: 100%;
+        height: 6px;
+        background: #ffffff8b; /* solid white for maximum contrast */
+        margin: 3rem 0; /* space above/below the divider */
+        box-shadow: 0 6px 18px rgba(255,255,255,0.06);
+        opacity: 0.98;
+        z-index: 5; /* keep above background overlays */
+    }
+
+    @media screen and (max-width: 860px) {
+        .section-divider {
+            height: 4px;
+            margin: 2rem 0;
+        }
+    }
+
+    @media screen and (max-width: 466px) {
+        .section-divider {
+            height: 3px;
+            margin: 1.25rem 0;
+        }
+    }
+    /* Make the divider more prominent and centered on wider screens (desktop) */
+    @media screen and (min-width: 1024px) {
+        .section-divider {
+            width: 60%;
+            height: 8px;
+            margin: 4rem auto;
+            background: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 8px 30px rgba(255,255,255,0.06);
+            opacity: 1;
+            z-index: 999; /* ensure it's above everything */
+        }
     }
     
     .anton-heading {
-        font-size: 90px;
+        font-size: 3.4rem;
         font-weight: 900;
-        line-height: 148px;
+        line-height: 1.05;
+        text-align: center;
     }
     
-    /* .anton-heading+.anton-heading {
-        margin-top: -55px;
-    } */
+    /* ensure stacked headings don't overlap on mobile */
+    .anton-heading+.anton-heading {
+        margin-top: 0.15rem;
+    }
 
     .anton-text {
         padding: 0px;
-        font-size: 25px;
+        font-size: 1.1rem;
         font-weight: 900;
         margin: 0;
-        padding: 0px;
+        text-align: center;
     }
     
     .anton-text+.anton-text {
@@ -702,11 +776,13 @@
     }
 
     .anton-button{
-        margin-top: -10px;
-        width: 120px;
-        height: 40px;
-        font-size: 15.2px;
-        line-height: 28.8px;
+        margin-top: 8px;
+        width: min(80%, 280px);
+        height: 44px;
+        font-size: 1rem;
+        line-height: 1.2;
+        display: inline-block;
+        border-radius: 6px;
     }
     
     .background-text{
@@ -826,53 +902,69 @@
 
 @media screen and (max-width : 700px) {
     .hero-background {
-        height: 200vh;
+        height: auto;
         width: auto;
     }
-    
-    .hero-image{
-        height: auto !important;
-        width: 130px !important;
-        margin-right: 100px;
-        padding-top: 30px;
+
+    .main-content { /* stack content */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        height: auto;
     }
 
-    .anton-heading {
-        font-size: 2.2rem;
-           font-weight: 900;
-           line-height: 1.1;
-           text-align: left;
-           word-break: break-word;
-           text-shadow: 2px 2px 8px #000, 0 2px 4px #222;
+    .hero-image{
+        height: auto !important;
+        width: 140px !important;
+        margin: 0;
+        padding-top: 8px;
     }
 
     .hero-wrapper-left {
-        padding-left: clamp(8px, 4vw, 24px);
-        padding-right: clamp(6px, 3vw, 16px);
+        padding-left: clamp(8px, 4vw, 16px);
+        padding-right: clamp(6px, 3vw, 12px);
     }
 
     .hero-content-left {
-        gap: 10px;
+        gap: 8px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-actions {
+        justify-content: center !important;
+    }
+    .hero-actions .anton-button {
+        width: 92%;
+        max-width: 320px;
+    }
+
+    .anton-heading {
+        font-size: 2.4rem;
+        font-weight: 900;
+        line-height: 1.05;
+        text-align: center;
+        word-break: break-word;
+    }
+
+    .anton-heading+.anton-heading {
+        margin-top: 0.15rem;
     }
 
     .anton-text {
-           font-size: 1rem;
-           font-weight: 900;
-           margin: 0;
-           text-align: left;
-           text-shadow: 1px 1px 4px #000;
-    }
-    
-    .anton-text+.anton-text {
-        margin-top: -12px;
+        font-size: 1rem;
+        font-weight: 900;
+        margin: 0;
+        text-align: center;
     }
 
     .anton-button{
-           width: 100px;
-           height: 36px;
-           font-size: 0.9rem;
-           border-radius: 4px;
-           margin-top: 10px;
+        width: min(85%, 260px);
+        height: 40px;
+        font-size: 0.95rem;
+        border-radius: 6px;
+        margin-top: 8px;
     }
 
     .about-section{
@@ -964,46 +1056,55 @@
 
 @media screen and (max-width : 556px) {
     .hero-background {
-        height: 200vh;
+        height: auto;
         width: auto;
     }
-    
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        height: auto;
+    }
+
     .hero-image{
         height: auto !important;
-        width: 100px !important;
-        margin-right: 100px;
-        padding-top: 30px;
+        width: 110px !important;
+        margin: 0;
+        padding-top: 8px;
     }
 
     .anton-heading {
-        font-size: 55px;
+        font-size: 2.2rem;
         font-weight: 900;
-        line-height: 108px;
+        line-height: 1.1;
+        text-align: center;
     }
 
-    .hero-wrapper-left {
-        padding-left: clamp(8px, 5vw, 20px);
-        padding-right: clamp(6px, 3vw, 14px);
+    .anton-heading+.anton-heading {
+        margin-top: 0.15rem;
     }
 
     .anton-text {
-        padding: 0px;
-        font-size: 14px;
-        font-weight: 900;
-        margin: 0;
-        padding: 0px;
-    }
-    
-    .anton-text+.anton-text {
-        margin-top: -10px;
+        font-size: 0.95rem;
+        text-align: center;
     }
 
     .anton-button{
-        margin-top: -20px;
-        width: 70px;
-        height: 25px;
-        font-size: 10.2px;
-        line-height: 28.8px;
+        margin-top: 6px;
+        width: 94%;
+        max-width: 300px;
+        height: 42px;
+        font-size: 0.95rem;
+        border-radius: 6px;
+    }
+    .hero-actions {
+        justify-content: center !important;
+    }
+    .hero-actions .anton-button {
+        width: 94%;
+        max-width: 300px;
     }
 
     .about-section{
@@ -1136,41 +1237,55 @@
 
 @media screen and (max-width : 466px) {
     .hero-background {
-        height: 200vh;
-        width: auto;
+        height: auto;
+        width: 100%;
     }
-    
+
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        height: auto;
+    }
+
     .hero-image{
         height: auto !important;
-        width: 80px !important;
-        margin-right: 100px;
-        padding-top: 30px;
+        width: 72px !important;
+        margin: 0;
+        padding-top: 6px;
     }
 
     .anton-heading {
-        font-size: 35px;
+        font-size: 1.9rem;
         font-weight: 900;
-        line-height: 94px;
+        line-height: 1.05;
+        text-align: center;
+    }
+
+    .anton-heading+.anton-heading {
+        margin-top: 0.15rem;
     }
 
     .anton-text {
-        padding: 0px;
-        font-size: 10px;
-        font-weight: 900;
-        margin: 0;
-        padding: 0px;
-    }
-    
-    .anton-text+.anton-text {
-        margin-top: -5px;
+        font-size: 0.85rem;
+        text-align: center;
     }
 
     .anton-button{
-        margin-top: -20px;
-        width: 50px;
-        height: 18px;
-        font-size: 8.2px;
-        line-height: 28.8px;
+        margin-top: 6px;
+        width: 94%;
+        max-width: 260px;
+        height: 40px;
+        font-size: 0.95rem;
+        border-radius: 6px;
+    }
+    .hero-actions {
+        justify-content: center !important;
+    }
+    .hero-actions .anton-button {
+        width: 94%;
+        max-width: 260px;
     }
 
     .about-section{
