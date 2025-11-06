@@ -70,14 +70,14 @@ export default function Home() {
               width: '100%'
             }}>
               <Button className="anton-button" style={{ 
-                backgroundColor: "#0d0f129e", 
-                border: "2px dotted white", 
+                backgroundColor: "#0d0f12d1", 
+                border: "2px solid white", 
                 borderRadius: '8px',
                 height: 'auto'
               }} onClick={() => router.push('/register')}>Register</Button>
               <Button className="anton-button" style={{ 
-                backgroundColor: "#0d0f129e", 
-                border: "2px dotted white", 
+                backgroundColor: "#0d0f12d1", 
+                border: "2px solid white", 
                 borderRadius: '8px',
                 height: 'auto'
               }} onClick={() => router.push('/quiz')}>Join Hunt</Button>
@@ -122,7 +122,7 @@ export default function Home() {
         
         <div >
           <Flex justify="center" align="center">
-            <TextHoverEffect text=".HUNT." />
+            <TextHoverEffect text=".CHASE." />
           </Flex>
         </div>
       </section>
