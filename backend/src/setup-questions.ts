@@ -60,15 +60,15 @@ async function setupQuestions() {
             },
             {
                 question_id: uuidv4(),
-                question_text: 'Mission 8: The Time Paradox',
-                question_description: 'Bumblebee discovers a riddle in the Matrix: "A doctor and a bus driver are in love with the same woman. The bus driver had to go on a long trip for a week. Before he left, he gave the woman seven apples. Why?" What\'s the answer?',
-                answer: 'An apple a day keeps the doctor away'
+                question_text: 'Mission 8: The Repair Team',
+                question_description: 'Three Autobots need to repair the base. Optimus can finish it alone in 10 days, Bumblebee in 12 days, and Ratchet in 15 days. They all start working together, but Optimus leaves after 2 days, and Bumblebee leaves 3 days before the work is finished. How many total days does it take to complete the repair?',
+                answer: '5'
             },
             {
                 question_id: uuidv4(),
-                question_text: 'Mission 9: The Peace Archives',
-                question_description: 'Optimus studies Earth\'s history database. "Humans remember when their greatest global conflict finally ended," he observes. In what year did World War II conclude?',
-                answer: '1945'
+                question_text: 'Mission 9: The Family Count',
+                question_description: 'Ratchet discovers a family puzzle: "There are 7 men. Each man has 7 wives. Each man and each wife has 7 children." How many people are there in total?',
+                answer: '63'
             },
             {
                 question_id: uuidv4(),

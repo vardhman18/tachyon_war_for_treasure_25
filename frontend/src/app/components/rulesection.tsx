@@ -10,28 +10,29 @@ import idbg3 from "../assets/idbg3.jpeg";
 export default function RuleSection() {
   // Content config
   const rules = [
-    {
-      id: 1,
-      title: "DIRECTIVE ALPHA: TEAM ASSEMBLY",
-      description: "UNIT COMPOSITION: 2–4 AGENTS REQUIRED. SOLO OPERATORS: PROHIBITED. ALL AGENTS MUST BE PRESENT DURING DEPLOYMENT.",
-      backgroundImage: idbg1.src, // card background image (ID card proportion)
-      backgroundPosition: 'center top'
-    },
-    {
-      id: 2,
-      title: "DIRECTIVE BETA: OPERATIONAL INTEGRITY",
-      description: "AID PROTOCOL: EXTERNAL SUPPORT FORBIDDEN. NETWORK ACCESS: STRICTLY LIMITED. BREACH = MISSION ABORT.",
-      backgroundImage: idbg2.src,
-      backgroundPosition: 'center center'
-    },
-    {
-      id: 3,
-      title: "DIRECTIVE GAMMA: TEMPORAL PROTOCOLS",
-      description: "TIME WINDOW: ABSOLUTE. LATE SUBMISSIONS WILL BE VOID. SYNCHRONIZE TEAM TIMERS FOR OPTIMAL SUCCESS.",
-      backgroundImage: idbg3.src,
-      backgroundPosition: 'center bottom'
-    }
-  ];
+  {
+    id: 1,
+    title: "DIRECTIVE ALPHA: TEAM FORMATION",
+    description: "TEAM SIZE: 2–4 OPERATIVES REQUIRED. SOLO ENTRY: DENIED. ALL PARTICIPANTS MUST BE ONLINE AND READY FOR DEPLOYMENT BY 8TH DECEMBER, 1 PM.",
+    backgroundImage: idbg1.src,
+    backgroundPosition: 'center top'
+  },
+  {
+    id: 2,
+    title: "DIRECTIVE BETA: MISSION INTEGRITY",
+    description: "EXTERNAL HELP OR ONLINE ASSISTANCE OUTSIDE YOUR TEAM IS STRICTLY FORBIDDEN. ALL RESPONSES MUST FOLLOW THE FORMAT — EXAMPLE: IF THE QUESTION IS 'WHAT IS 2+2?', SUBMIT AS answer 4. ANY DEVIATION OR UNFAIR MEANS WILL LEAD TO DISQUALIFICATION.",
+    backgroundImage: idbg2.src,
+    backgroundPosition: 'center center'
+  },
+  {
+    id: 3,
+    title: "DIRECTIVE GAMMA: VICTORY PROTOCOL",
+    description: "THE ONLINE MISSION BEGINS AT 1 PM ON 8TH DECEMBER. THE FASTEST TEAM TO COMPLETE ALL CHALLENGES FIRST WILL SECURE THE WIN. SPEED AND ACCURACY MAXIMIZE YOUR CHANCES OF VICTORY. SINGLE ROUND • SINGLE WINNING TEAM • PRIZE POOL ₹1000.",
+    backgroundImage: idbg3.src,
+    backgroundPosition: 'center bottom'
+  }
+];
+
 
   // Motion variants (minimal and reusable)
   const containerVariants = {
