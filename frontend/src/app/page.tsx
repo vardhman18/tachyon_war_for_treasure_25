@@ -110,7 +110,7 @@ export default function Home() {
       
       <section className="rules-section">
         {/* ELITES section - Hidden until results are declared */}
-        {/* <Flex justify="center" align="center" vertical style={{ marginTop: "50px" }}>
+        <Flex justify="center" align="center" vertical style={{ marginTop: "50px" }}>
           <h1 className="background-text rules-text">ELITES</h1>
           <h1 className="background-covertext rules-covertext">ELITE</h1>
 
@@ -118,7 +118,7 @@ export default function Home() {
             <ExpandableCardDemo />
           </Flex>
 
-        </Flex> */}
+        </Flex>
         
         <div >
           <Flex justify="center" align="center">
